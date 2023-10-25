@@ -1,10 +1,7 @@
-//#include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-//#include <ArduinoJson.h>
 #include <WiFiClient.h>
-//
 #include <Adafruit_GFX.h>       //Libraries required to use the Display
 #include <Adafruit_ST7735.h>  ////Libraries required to use the Display
 #include <SPI.h>
@@ -12,8 +9,7 @@
 #include <TimeLib.h>          // Include Arduino time library
 #include <ArduinoJson.h>
 
-//#include <ESP8266WiFi.h>        //Use ESP8266 functions                                              
-//#include <ESP8266HTTPClient.h> //http client
+
 
 WiFiClient wifiClient;
 
@@ -26,14 +22,14 @@ WiFiClient wifiClient;
 
 //wi-fi
 
-const char* ssid = " ";              //Your router SSID and password                             
-const char* password =  " ";    //Your router SSID and password
+const char* ssid = "%networkname_here%";              //Your router SSID and password                             
+const char* password =  "password_here";    //Your router SSID and password
 //get api data
 const String server  = "api.openweathermap.org";
 const String lat     = "59.836819";
 const String lon     = "30.311276";
-const String appid   = "key";
-const String tail = "&units=metric&lang=ru";
+const String appid   = "your_API_KEY here";
+const String tail = "&units=metric&lang=en"; // you can choose metrics and lang,read more about that here: https://openweathermap.org/current
 const String url     = "http://" + server + "/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + appid + tail;
 const int port = 443;  // HTTPS port
 const int httpPortRead = 443; 
@@ -95,7 +91,7 @@ void loop() {
       //  Serial.println("\nWeather");
       //  Serial.printf("id: %d\n", weather.id);
       //  Serial.printf("main: %s\n", weather.main);
-      //  Serial.printf("description: %s\n", weather.descript);
+        Serial.printf("description: %s\n", weather.descript);
       //  Serial.printf("icon: %s\n", weather.icon);
         Serial.printf("temp: %d c\n", round(weather.temp));
         Serial.printf("humidity: %d %\n", round(weather.humidity));
@@ -110,12 +106,12 @@ void loop() {
   tft.setCursor(20, 10);    //Horiz/Vertic
   tft.setTextSize(2);
   tft.setTextColor(ST77XX_GREEN);
-  tft.print("RUSSIA"); 
+  tft.print("weather.main"); 
 
   tft.setCursor(15, 30);    //Horiz/Vertic
   tft.setTextSize(1);
   tft.setTextColor(ST77XX_WHITE);
-  tft.print("SPB weather");
+  tft.print("weather.descript");
 
   tft.setCursor(0, 55);    //Horiz/Vertic
   tft.setTextSize(2);
@@ -127,10 +123,10 @@ void loop() {
   tft.setCursor(0, 115);    //Horiz/Vertic
   tft.setTextSize(1);
   tft.setTextColor(ST77XX_RED);
-  //tft.print("humidity:");
+  tft.print("humidity:");
   tft.setCursor(5, 115);
   tft.setTextColor(ST77XX_RED);
-  //tft.print(weather.humidity); //
+  tft.print(weather.humidity); //
  delay(5000);        
                   }
 }
